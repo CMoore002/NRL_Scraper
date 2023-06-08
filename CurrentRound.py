@@ -1,4 +1,12 @@
 class CurrentRound:
+    """
+    :param season: the season in which the match was played
+    :param round: the round in which the match was played
+    :param venue: the venue that the match was played at
+    :param kickOffTime: the kick off time of the match
+    :param homeTeam: the home team
+    :param awayTeam: the away team
+    """
     def __init__(self, season, round, venue, kickOffTime, homeTeam, awayTeam):
         self.season = season
         self.round = round
