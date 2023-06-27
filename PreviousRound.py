@@ -15,7 +15,7 @@ class PreviousRound(CurrentRound):
     :param awayCompletionPercent: the away teams completion rate in percentage
     :param awayTacklePercent: the away teams successful tackle rate in percentage
     """
-    def __init__(self, season, round, venue, kickOffTime, homeTeam, homeCompletionPercent, homeTacklePercent, homeScore, awayTeam, awayScore, awayCompletionPercent, awayTacklePercent):
+    def __init__(self, season, round, venue, kickOffTime, homeTeam, homeScore, homeCompletionPercent, homeTacklePercent, awayTeam, awayScore, awayCompletionPercent, awayTacklePercent):
         super().__init__(season, round, venue, kickOffTime, homeTeam, awayTeam)
         self.homeScore = homeScore
         self.homeCompletionPercent = homeCompletionPercent

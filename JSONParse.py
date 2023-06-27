@@ -46,13 +46,15 @@ class JSONParse:
         newJsonData = newSoup.find(class_="l-content pre-quench", id="vue-match-centre")['q-data']
         newSiteJson = json.loads(newJsonData)
         for match in newSiteJson['match']['stats']['groups']:
-            if match['stats'][0]['title'] == 'Possession %':
-                homeCompletionPercent = match['stats'][0]['homeValue']['value']
-                awayCompletionPercent = match['stats'][0]['awayValue']['value']
-            
-            if match['stats'][0]['title'] == 'Effective Tackle %':
-                homeTacklePercent = match['stats'][0]['homeValue']['value']
-                awayTacklePercent = match['stats'][0]['awayValue']['value'] 
+            for stat in match['stats']:
+                if stat['title'] == 'Completion Rate':
+                    homeCompletionPercent = stat['homeValue']['value']
+                    awayCompletionPercent = stat['awayValue']['value']
+                
+                if stat['title'] == 'Effective Tackle %':
+                    homeTacklePercent = stat['homeValue']['value']
+                    awayTacklePercent = stat['awayValue']['value'] 
+
     
 
         return PreviousRound(season, round, venue, kickOffTime, homeTeam, homeScore, homeCompletionPercent, homeTacklePercent, awayTeam, awayScore, awayCompletionPercent, awayTacklePercent)

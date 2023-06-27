@@ -18,12 +18,13 @@ for x in siteJson['fixtures']:
     newSoup = BeautifulSoup(newPage.text, 'html.parser')
     newJsonData = newSoup.find(class_="l-content pre-quench", id="vue-match-centre")['q-data']
     newSiteJson = json.loads(newJsonData)
-    for x in newSiteJson['match']['stats']['groups']:
-        if x['stats'][0]['title'] == 'Possession %':
-            print(x['stats'][0]['homeValue']['value'], x['stats'][0]['awayValue']['value'] )
-        
-        if x['stats'][0]['title'] == 'Effective Tackle %':
-            print(x['stats'][0]['homeValue']['value'], x['stats'][0]['awayValue']['value'] )
+    for match in newSiteJson['match']['stats']['groups']:
+        for x in match['stats']:
+            if x['title'] == 'Completion Rate':
+                print(x['homeValue']['value'], x['awayValue']['value'])
+            if x['title'] == 'Effective Tackle %':
+                print(x['homeValue']['value'], x['awayValue']['value'])
+                
 
     break
 
