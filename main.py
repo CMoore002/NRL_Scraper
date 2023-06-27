@@ -9,7 +9,9 @@ def main():
     ##User enters the season that they want results from
     userSeason = input("Enter Season: ")
     round = 1
-    headers = ['Season', 'Round', 'Venue', 'Kick_Off_Time', 'Home_Team', 'Home_Score', 'Away_Team', 'Away_Score']
+    headers = ['Season', 'Round', 'Venue', 'Kick_Off_Time', 
+               'Home_Team', 'Home_Score', 'Home_Completion', 'Home_Tackle',
+               'Away_Team', 'Away_Score', 'Away_Completion', 'Away_Tackle']
     dataframe = pd.DataFrame(columns=headers)
 
     while True:
@@ -23,6 +25,7 @@ def main():
         ##siteJson['fixtures'] contains all the fixtures in the round. Looping through each one gives the details for each match
         for jsonFixtures in siteJson['fixtures']:
             fixtureData = JSONParse(jsonFixtures).getPreviousRound()
+            print("test")
             ##appending the data to the dataframe
             data = [fixtureData.getSeason(), ##getting season
                     fixtureData.getRound(), ##getting round
@@ -30,8 +33,12 @@ def main():
                     fixtureData.getKickOffTime(), ##getting kick off time
                     fixtureData.getHomeTeam(), ##getting home team
                     fixtureData.getHomeScore(), ##getting home score
+                    fixtureData.getHomeCompletion(), ##getting home completion
+                    fixtureData.getHomeTacklePercentage(), ##getting home tackle percentage
                     fixtureData.getAwayTeam(), ##getting away team
-                    fixtureData.getAwayScore() ##getting away score
+                    fixtureData.getAwayScore(), ##getting away score
+                    fixtureData.getAwayCompletion(), ##getting away completion
+                    fixtureData.getAwayTacklePercentage() ##getting away tackle percentage
                     ]
             dataframe.loc[len(dataframe)] = data
             lastRound = fixtureData.getRound()
@@ -39,7 +46,7 @@ def main():
         ##No more matches after the grand final, so we finish and return
         if lastRound == 'Grand Final':
             ##exporting data to csv
-            dataframe.to_csv('{}_SEASON_NRL_DATA'.format(userSeason))
+            dataframe.to_csv('{}_SEASON_NRL_DATA_v1.1'.format(userSeason))
             return
         round += 1
 

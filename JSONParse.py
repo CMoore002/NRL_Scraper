@@ -1,5 +1,9 @@
 from CurrentRound import CurrentRound
 from PreviousRound import PreviousRound
+import requests
+from bs4 import BeautifulSoup
+import json
+
 
 class JSONParse:
     """
@@ -34,5 +38,22 @@ class JSONParse:
         homeScore = self.jsonData['homeTeam']['score']
         awayTeam = self.jsonData['awayTeam']['nickName']
         awayScore = self.jsonData['awayTeam']['score']
-        return PreviousRound(season, round, venue, kickOffTime, homeTeam, homeScore, awayTeam, awayScore)
+
+        ##Getting completion and tackle percentage
+        newSite = self.jsonData['secondaryCallToAction']['url'].split("#")[0]
+        newPage = requests.get(newSite)
+        newSoup = BeautifulSoup(newPage.text, 'html.parser')
+        newJsonData = newSoup.find(class_="l-content pre-quench", id="vue-match-centre")['q-data']
+        newSiteJson = json.loads(newJsonData)
+        for match in newSiteJson['match']['stats']['groups']:
+            if match['stats'][0]['title'] == 'Possession %':
+                homeCompletionPercent = match['stats'][0]['homeValue']['value']
+                awayCompletionPercent = match['stats'][0]['awayValue']['value']
+            
+            if match['stats'][0]['title'] == 'Effective Tackle %':
+                homeTacklePercent = match['stats'][0]['homeValue']['value']
+                awayTacklePercent = match['stats'][0]['awayValue']['value'] 
+    
+
+        return PreviousRound(season, round, venue, kickOffTime, homeTeam, homeScore, homeCompletionPercent, homeTacklePercent, awayTeam, awayScore, awayCompletionPercent, awayTacklePercent)
         
