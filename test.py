@@ -5,7 +5,7 @@ import json
 import pandas as pd
 
 round = 1
-userSeason = 2015
+userSeason = 2018
 website = "https://www.nrl.com/draw/?competition=111&round={}&season={}".format(round, int(userSeason))
 page = requests.get(website)
 soup = BeautifulSoup(page.text, 'html.parser')
@@ -26,6 +26,5 @@ for x in siteJson['fixtures']:
                 print(x['homeValue']['value'], x['awayValue']['value'])
                 
 
-    break
 
     

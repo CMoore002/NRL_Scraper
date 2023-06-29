@@ -15,6 +15,7 @@ def main():
     dataframe = pd.DataFrame(columns=headers)
 
     while True:
+        print(round)
         ##Getting website HTML and converting the jsonData to json to be able to use it as a dictionary
         website = "https://www.nrl.com/draw/?competition=111&round={}&season={}".format(round, int(userSeason))
         page = requests.get(website)
@@ -25,7 +26,6 @@ def main():
         ##siteJson['fixtures'] contains all the fixtures in the round. Looping through each one gives the details for each match
         for jsonFixtures in siteJson['fixtures']:
             fixtureData = JSONParse(jsonFixtures).getPreviousRound()
-            print("test")
             ##appending the data to the dataframe
             data = [fixtureData.getSeason(), ##getting season
                     fixtureData.getRound(), ##getting round

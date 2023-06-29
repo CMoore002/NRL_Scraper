@@ -45,6 +45,7 @@ class JSONParse:
         newSoup = BeautifulSoup(newPage.text, 'html.parser')
         newJsonData = newSoup.find(class_="l-content pre-quench", id="vue-match-centre")['q-data']
         newSiteJson = json.loads(newJsonData)
+        homeCompletionPercent, awayCompletionPercent, homeTacklePercent, awayTacklePercent = -1, -1, -1, -1
         for match in newSiteJson['match']['stats']['groups']:
             for stat in match['stats']:
                 if stat['title'] == 'Completion Rate':
